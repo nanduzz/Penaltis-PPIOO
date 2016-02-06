@@ -6,7 +6,7 @@ public enum Ponto {
 	DIREITACIMA, DIRETABAIXO,
 	MEIOCIMA, MEIOBAIXO;
 	
-	public boolean errar(){
+	public static boolean errar(){
 		return Util.randomBoolean();
 	}
 	

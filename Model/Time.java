@@ -49,4 +49,12 @@ public class Time {
 		return this.gols;
 	}
 
+	public Jogador getGoleiro() {
+		return goleiro;
+	}
+
+	public void setGoleiro(Jogador goleiro) {
+		this.goleiro = goleiro;
+	}
+
 }
