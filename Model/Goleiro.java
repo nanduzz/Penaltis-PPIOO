@@ -1,11 +1,9 @@
-package Model;
+package model;
 
 public class Goleiro extends Jogador{
 
-	public Goleiro(){
-		int confianca = (int) Math.random() * 100;
-		int qualidade = (int) Math.random() * 100;
-		this.setPerfil(new Perfil(qualidade, confianca));
+	public Goleiro(String nome){
+		super(nome);
 	}
 	
 	

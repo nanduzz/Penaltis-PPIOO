@@ -1,26 +1,30 @@
-package Model;
+package model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Time {
 	
-	private final int TAMANHO_TIME = 11;
-	private final int TAMANHO_EQUIPE = 6;
+//	private final int TAMANHO_TIME = 11;
+//	private final int TAMANHO_EQUIPE = 6;
 	
 	private String nome;
-	private Jogador[] jogadores = new Jogador[TAMANHO_TIME];
-	private Jogador[] batedores = new Jogador[TAMANHO_EQUIPE - 1];
+	private List<Jogador> jogadores = new ArrayList<>();
+	private List<Jogador> batedores = new ArrayList<>();
 	private Jogador goleiro;
 	private Torcida torcida;
 	private int gols;
 	
-	public Time(String nome){
+	public Time(String nome, List<Jogador> jogadores){
 		this.torcida = new Torcida();
 		this.nome = nome;
+		this.jogadores = jogadores;
 	}
 	
-	public Jogador[] getJogadores() {
+	public List<Jogador> getJogadores() {
 		return jogadores;
 	}
-	public void setJogadores(Jogador[] jogadores) {
+	public void setJogadores(List<Jogador> jogadores) {
 		this.jogadores = jogadores;
 	}
 	
@@ -39,7 +43,7 @@ public class Time {
 	}
 
 	public Jogador selecionaBatedor(int numeroCobranca) {
-		return batedores[numeroCobranca];
+		return batedores.get(numeroCobranca);
 	}
 	
 	public void marcaGol(){

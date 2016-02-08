@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="302.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.InicioView">
+   <children>
+      <ListView fx:id="lvTime" layoutX="29.0" layoutY="38.0" onMouseClicked="#lvMouseClicked" prefHeight="200.0" prefWidth="143.0" />
+      <ListView fx:id="lvJogadores" layoutX="319.0" layoutY="38.0" prefHeight="200.0" prefWidth="143.0" />
+      <Label fx:id="lbInformacoes" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="162.0" layoutY="16.0" prefHeight="37.0" prefWidth="168.0" text="Selecione seu time" textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="363.0" layoutY="14.0" text="Jogadores" />
+      <ImageView fx:id="ivFlexa" fitHeight="82.0" fitWidth="117.0" layoutX="205.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/flexaDireita.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btCancelar" layoutX="29.0" layoutY="264.0" mnemonicParsing="false" onAction="#btCancelarAction" text="Cancelar" />
+      <Button fx:id="btAvancar" layoutX="400.0" layoutY="264.0" mnemonicParsing="false" onAction="#btAvancarAction" text="Avançar" />
+      <Label fx:id="lbTime1" layoutX="86.0" layoutY="16.0" text="Time " />
+   </children>
+</AnchorPane>

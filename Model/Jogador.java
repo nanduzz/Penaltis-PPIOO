@@ -1,22 +1,23 @@
-package Model;
+package model;
 
 public abstract class Jogador {
 
-	private String Nome;
+	private String nome;
 	private Perfil perfil;
 	private Time time;
 	
-	public Jogador(){
+	public Jogador(String nome){
 		int confianca = Util.random(Util.POTENCIA_MAX);
 		int qualidade = Util.random(Util.POTENCIA_MAX);
 		this.setPerfil(new Perfil(qualidade, confianca));
+		this.nome = nome;
 	}
 	
 	public String getNome() {
-		return Nome;
+		return this.nome;
 	}
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 	public Perfil getPerfil() {
 		return perfil;

@@ -1,16 +1,22 @@
-package Controller;
+package controller;
 
 import java.util.ArrayList;
 
-import Model.Jogador;
-import Model.Observer;
-import Model.Parametros;
-import Model.Ponto;
-import Model.Time;
-import Model.Torcida;
-import Model.Util;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import model.Jogador;
+import model.Observer;
+import model.Parametros;
+import model.Ponto;
+import model.Time;
+import model.Torcida;
+import model.Util;
+import view.PartidaView;
 
-public class PartidaController {
+public class PartidaController{
 	
 	private final int TIME_JOGADOR = 0;
 	private final int TIME_MAQUINA = 1;
@@ -19,26 +25,29 @@ public class PartidaController {
 	
 	private Time[] timesDaPartida = new Time[2];
 
-	public static void main(String[] args) {
-		PartidaController partida = new PartidaController();
-		
-		partida.iniciaPartida("time1", "time2");
-		
+	public Time[] getTimesDaPartida() {
+		return timesDaPartida;
 	}
+
+	//	public static void main(String[] args) {
+//		PartidaController partida = new PartidaController();
+//		partida.iniciaPartida("time1", "time2", args);
+//		
+//	}
 	private void AdicionaTorcedoresAoObserver( Observer torcida){
 		torcedores.add(torcida);
 	}
 	
-	private void iniciaPartida(String nomeTimeJogador, String nomeTimeMaquina){
-		this.timesDaPartida[TIME_JOGADOR] = new Time(nomeTimeJogador); // inicia time do jogador
-		this.timesDaPartida[TIME_MAQUINA] = new Time(nomeTimeMaquina); // inicia time da Maquina
+	public void iniciaPartida(Time timeJogador, Time timeAdversario){
+		this.timesDaPartida[TIME_JOGADOR] = timeJogador; // inicia time do jogador
+		this.timesDaPartida[TIME_MAQUINA] = timeAdversario; // inicia time da Maquina
 		AdicionaTorcedoresAoObserver( this.timesDaPartida[TIME_JOGADOR].getTorcida() ); // adiciona Torcedores do jogador ao observer
 		AdicionaTorcedoresAoObserver( this.timesDaPartida[TIME_MAQUINA].getTorcida() ); // adiciona torcedores da maquina ao observer
 		
 		//diz o nome dos times
 		System.out.println( this.timesDaPartida[TIME_JOGADOR].getNome() + " contra " +
 							this.timesDaPartida[TIME_MAQUINA].getNome() );
-		
+		/*
 		//define que o jogo tera inicio automatico
 		Parametros.setInicioAltomatico(true);
 		
@@ -47,6 +56,7 @@ public class PartidaController {
 		// inicia as cobranças de penaltis
 		iniciaCobrancas();
 		System.out.println("time de inicio:" + timesDaPartida[0].getNome());
+		*/
 		for( Observer o : this.torcedores ){
 			o.update();
 		}
@@ -189,5 +199,4 @@ public class PartidaController {
 		// se não time adversario é o do jogador
 		return this.timesDaPartida[TIME_JOGADOR];
 	}
-
 }

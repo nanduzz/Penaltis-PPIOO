@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PartidaView">
+   <children>
+      <HBox layoutX="38.0" layoutY="43.0">
+         <children>
+            <ListView fx:id="lvTime1" layoutX="38.0" layoutY="43.0" prefHeight="200.0" prefWidth="136.0" />
+            <ImageView fx:id="ivJogo" fitHeight="200.0" fitWidth="250.0" layoutX="174.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
+            <ListView fx:id="lvTime2" layoutX="427.0" layoutY="43.0" prefHeight="200.0" prefWidth="136.0" />
+         </children>
+      </HBox>
+      <Label fx:id="lbTime1" layoutX="92.0" layoutY="17.0" text="Time 1" />
+      <Label fx:id="lbTime2" layoutX="481.0" layoutY="17.0" text="Time 2" />
+      <Label fx:id="lbPlacar" layoutX="282.0" layoutY="17.0" text="Placar" />
+   </children>
+</Pane>
