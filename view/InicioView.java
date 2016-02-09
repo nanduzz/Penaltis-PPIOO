@@ -1,8 +1,5 @@
 package view;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Batedor;
-import model.Goleiro;
 import model.Jogador;
 import model.Time;
 
@@ -76,7 +71,7 @@ public class InicioView {
     	}else if(timesSelecionados.size() == 2){
     		if (timesSelecionados.get(1).equals(timesSelecionados.get(0))){
     			timesSelecionados.remove(timesSelecionados.get(1));
-    			lbInformacoes.setText("Adversario deve ser um time diferente!");
+    			lbInformacoes.setText("Adversario deve ser um time\n diferente!");
     			lbInformacoes.setTextFill(Color.web("#FF0000"));
     			return;
     		}
@@ -88,11 +83,6 @@ public class InicioView {
     
     @FXML
     void initialize() {
-        assert lvJogadores != null : "fx:id=\"lvJogadores\" was not injected: check your FXML file 'inicioView.fxml'.";
-        assert lvTime != null : "fx:id=\"lvTime\" was not injected: check your FXML file 'inicioView.fxml'.";
-        assert lbTime != null : "fx:id=\"lbTime\" was not injected: check your FXML file 'inicioView.fxml'.";
-        assert btCancelar != null : "fx:id=\"btCancelar\" was not injected: check your FXML file 'inicioView.fxml'.";
-
         inicializaTimes();
 
     }
@@ -114,7 +104,7 @@ public class InicioView {
     
     private void inicializaTimes(){
     	ObservableList<String> listaTimes = FXCollections.observableArrayList();
-    	PegaTimes();
+    	timesParaSelecao = PartidaController.PegaTimes();
     	for (Time t : timesParaSelecao){
     		listaTimes.add(t.getNome());
     	}
@@ -122,29 +112,4 @@ public class InicioView {
     	
     }
     
-    private void PegaTimes(){
-    	String dir = ( "c:/ra88408-ra89354/penaltis/" );
-    	try{ 
-    		File diretorio = new File( dir );
-    		for(File f : diretorio.listFiles()){
-    			if( f.isFile()){
-    				List<Jogador> jogadores = new ArrayList<Jogador>();
-    				BufferedReader br = new BufferedReader(new FileReader(f));
-    				String linha = br.readLine();
-    				while( linha != null){
-    					if (jogadores.isEmpty())
-    						jogadores.add(new Goleiro(linha));
-    					else
-    						jogadores.add(new Batedor(linha));
-    					
-    					linha = br.readLine();
-    				}
-    				String[] nomeTime = f.getName().split(".txt");
-    				timesParaSelecao.add( new Time( nomeTime[0], jogadores));
-    			}
-    		}
-    	}catch(Exception e){
-    		System.out.println("Diretorio :" + dir + " não encontrado");
-    	}	
-    }
 }

@@ -1,12 +1,18 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.Batedor;
+import model.Goleiro;
 import model.Jogador;
 import model.Observer;
 import model.Parametros;
@@ -22,21 +28,55 @@ public class PartidaController{
 	private final int TIME_MAQUINA = 1;
 	private final int NUMERO_COBRANCAS = 6;
 	private ArrayList<Observer> torcedores = new ArrayList<Observer>();
+	private boolean jogadorChutando;
 	
+	public boolean isJogadorChutando() {
+		return jogadorChutando;
+	}
+
+	public void setJogadorChutando(boolean jogadorChutando) {
+		this.jogadorChutando = jogadorChutando;
+	}
+
+
 	private Time[] timesDaPartida = new Time[2];
 
 	public Time[] getTimesDaPartida() {
 		return timesDaPartida;
 	}
 
-	//	public static void main(String[] args) {
-//		PartidaController partida = new PartidaController();
-//		partida.iniciaPartida("time1", "time2", args);
-//		
-//	}
 	private void AdicionaTorcedoresAoObserver( Observer torcida){
 		torcedores.add(torcida);
 	}
+	
+    public static List<Time> PegaTimes(){
+    	String dir = ( "c:/ra88408-ra89354/penaltis/" );
+    	List<Time> timesParaSelecao  = new ArrayList<Time>(); 
+    	try{ 
+    		File diretorio = new File( dir );
+    		for(File f : diretorio.listFiles()){
+    			if( f.isFile()){
+    				List<Jogador> jogadores = new ArrayList<Jogador>();
+    				BufferedReader br = new BufferedReader(new FileReader(f));
+    				String linha = br.readLine();
+    				while( linha != null){
+    					if (jogadores.isEmpty())
+    						jogadores.add(new Goleiro(linha));
+    					else
+    						jogadores.add(new Batedor(linha));
+    					
+    					linha = br.readLine();
+    				}
+    				String[] nomeTime = f.getName().split(".txt");
+    				timesParaSelecao.add( new Time( nomeTime[0], jogadores));
+    			}
+    		}
+    		
+    	}catch(Exception e){
+    		System.out.println("Diretorio :" + dir + " não encontrado");
+    	}	
+    	return timesParaSelecao;
+    }
 	
 	public void iniciaPartida(Time timeJogador, Time timeAdversario){
 		this.timesDaPartida[TIME_JOGADOR] = timeJogador; // inicia time do jogador
@@ -47,35 +87,54 @@ public class PartidaController{
 		//diz o nome dos times
 		System.out.println( this.timesDaPartida[TIME_JOGADOR].getNome() + " contra " +
 							this.timesDaPartida[TIME_MAQUINA].getNome() );
-		/*
+		
 		//define que o jogo tera inicio automatico
 		Parametros.setInicioAltomatico(true);
 		
 		//decide quem começa as cobranças
 		decideInicio();
 		// inicia as cobranças de penaltis
-		iniciaCobrancas();
-		System.out.println("time de inicio:" + timesDaPartida[0].getNome());
-		*/
-		for( Observer o : this.torcedores ){
-			o.update();
-		}
+
+		
+		iniciaPartidaView();
+		
+		//iniciaCobrancas();
+//		System.out.println("time de inicio:" + timesDaPartida[0].getNome());
+//		
+//		for( Observer o : this.torcedores ){
+//			o.update();
+//		}
 	}
 	
+	private void iniciaPartidaView() {
+		try{
+			PartidaView partidaView = new PartidaView(this.timesDaPartida[TIME_JOGADOR],
+				  								  this.timesDaPartida[TIME_MAQUINA]);
+			Stage stage = new Stage();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/partidaView.fxml"));
+			fxmlLoader.setController(partidaView);
+			Parent root = fxmlLoader.load();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+
 	private void decideInicio(){
-		if (!Parametros.isInicioAltomatico() )
+		if (!Parametros.isInicioAltomatico() ){
+			setJogadorChutando(true);
 			return;
+		}
 		
 		//gera um numero aleatorio até 2
 		int timeInicio = Util.random(2);
 		
 		// se o time que for começar o jogo não for o do jogador, é feita uma alteração no array
 		// para que o time da Maquina fique como primeira posição do array
-		if (timeInicio != 1){
-			Time timeAux = timesDaPartida[TIME_JOGADOR];
-			this.timesDaPartida[TIME_JOGADOR] = timesDaPartida[TIME_MAQUINA];
-			this.timesDaPartida[TIME_MAQUINA] = timeAux;
-		}
+		setJogadorChutando(timeInicio != 1);
+		
 	}
 	
 	private void iniciaCobrancas(){
