@@ -1,9 +1,11 @@
-package view;
+package br.uem.penaltis.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.PartidaController;
+import br.uem.penaltis.controller.PartidaController;
+import br.uem.penaltis.model.Jogador;
+import br.uem.penaltis.model.Time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -14,8 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Jogador;
-import model.Time;
 
 public class InicioView {
 	
@@ -84,7 +84,6 @@ public class InicioView {
     @FXML
     void initialize() {
         inicializaTimes();
-
     }
     
     @FXML

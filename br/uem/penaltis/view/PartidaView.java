@@ -1,9 +1,14 @@
-package view;
+package br.uem.penaltis.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.PartidaController;
+import br.uem.penaltis.controller.PartidaController;
+import br.uem.penaltis.model.Jogador;
+import br.uem.penaltis.model.Ponto;
+import br.uem.penaltis.model.Time;
+import br.uem.penaltis.model.Util;
+import br.uem.penaltis.view.extensoes.ButtonComValor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,11 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import model.Jogador;
-import model.Ponto;
-import model.Time;
-import model.Util;
-import view.extensoes.ButtonComValor;
 
 public class PartidaView{
 
@@ -82,36 +82,32 @@ public class PartidaView{
 				
 				@Override
 				public void handle(ActionEvent event) {
+					ObservableList<String> listaJogadores;
 					if(partidaController.isJogadorChutando()){
 						int indexJogador = lvTime1.getSelectionModel().getSelectedIndex();
 						if (indexJogador == 0){
 							return;
 						}
 						partidaController.chuteJogador(b.getValor(), indexJogador);
-						ObservableList<String> listaJogadores = lvTime1.getItems();
+						listaJogadores = lvTime1.getItems();
 						listaJogadores.remove(indexJogador);
-						lvTime1.getSelectionModel().select(0);
-						if(listaJogadores.isEmpty()){
-							//TODO  acabou os jogadores para bater o penalti manulo
-							System.out.println("acabou os jogadores");
-						}
+						lvTime1.getSelectionModel().select(0);				
 						
-						
-						
-						partidaController.setJogadorChutando(false);
 					}else{
 						int indexBatedor = Util.random( lvTime2.getItems().size() -1);
 						partidaController.defesaGoleiro(b.getValor(), indexBatedor);
-						ObservableList<String> listaJogadores = lvTime2.getItems();
+						listaJogadores = lvTime2.getItems();
 						listaJogadores.remove(indexBatedor);
-						partidaController.setJogadorChutando(true);
 					}
-					trocaImagemBotoes( retornaImagemDoBotao() );
+					if( partidaController.isFimJogo() ){
+						fechaJanela();
+					}else if(listaJogadores.size() == 1){
+						voltaJogadores();
+					}
+					
 					atualizaPlacar();
-					if( partidaController.ifFimJogo() ){
-			    		Stage stage = (Stage) b.getScene().getWindow();
-			    		stage.close();
-					}
+					partidaController.setJogadorChutando(!partidaController.isJogadorChutando());
+					trocaImagemBotoes( retornaImagemDoBotao() );
 					
 				}
 
@@ -121,7 +117,6 @@ public class PartidaView{
 					}
 				}
 			});
-			
 			
 			botoes.add(b);
 			if (i < 3){
@@ -151,6 +146,21 @@ public class PartidaView{
 	private void atualizaPlacar(){
 		this.lbPlacar.setText( this.partidaController.getTimesDaPartida()[0].getGols() + " X " + 
 							   this.partidaController.getTimesDaPartida()[1].getGols()			);
+	}
+	
+	private void fechaJanela(){
+		Stage stage = (Stage) lvTime1.getScene().getWindow();
+		stage.close();
+	}
+	
+	private void voltaJogadores(){
+		if (partidaController.isJogadorChutando()){
+			Time time = partidaController.getTimesDaPartida()[PartidaController.TIME_JOGADOR];
+			preencheListViews(time, lvTime1);
+		}else{
+			Time time = partidaController.getTimesDaPartida()[PartidaController.TIME_MAQUINA];
+			preencheListViews(time, lvTime2);
+		}
 	}
 
 }

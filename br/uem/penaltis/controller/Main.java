@@ -1,4 +1,4 @@
-package controller;
+package br.uem.penaltis.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

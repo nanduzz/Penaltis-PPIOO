@@ -1,4 +1,4 @@
-package view.extensoes;
+package br.uem.penaltis.view.extensoes;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;

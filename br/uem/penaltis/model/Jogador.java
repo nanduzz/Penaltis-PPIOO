@@ -1,4 +1,4 @@
-package model;
+package br.uem.penaltis.model;
 
 public abstract class Jogador {
 
@@ -31,8 +31,8 @@ public abstract class Jogador {
 	public void setTime(Time time) {
 		this.time = time;
 	}
-	public Ponto direcionar(){;
-		return Ponto.DIREITACIMA;
+	public Ponto direcionar(int posicao){
+		return Ponto.values()[posicao];
 	}
 	
 }

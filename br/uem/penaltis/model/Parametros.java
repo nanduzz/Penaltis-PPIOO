@@ -1,4 +1,4 @@
-package model;
+package br.uem.penaltis.model;
 
 public final class Parametros {
 

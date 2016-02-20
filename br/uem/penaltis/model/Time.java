@@ -1,4 +1,4 @@
-package model;
+package br.uem.penaltis.model;
 
 import java.util.ArrayList;
 import java.util.List;

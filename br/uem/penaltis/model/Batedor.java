@@ -1,4 +1,4 @@
-package model;
+package br.uem.penaltis.model;
 
 public class Batedor extends Jogador{
 	
@@ -6,8 +6,8 @@ public class Batedor extends Jogador{
 		super(nome);
 	}
 
-	public void chutar(Ponto ponto){
-		
+	public boolean chutar(){
+		return Ponto.errar();
 	}
 	
 }

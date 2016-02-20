@@ -1,10 +1,16 @@
-package model;
+package br.uem.penaltis.model;
 
 public class Torcida implements Observer{
 
 	private final int TAMANHO_TORCIDA = 100;
 	
 	private Torcedor[] torcedores = new Torcedor[TAMANHO_TORCIDA];
+	
+	public Torcida(){
+		for( int i = 0; i < torcedores.length; i++){
+			torcedores[i] = new Torcedor();
+		}
+	}
 	
 	public Torcedor[] getTorcedores() {
 		return torcedores;
@@ -33,6 +39,7 @@ public class Torcida implements Observer{
 	public void lamentar(){
 		
 	}
+	
 	@Override
 	public void update() {
 		System.out.println("GooooooooooooooL");

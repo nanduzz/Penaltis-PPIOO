@@ -1,4 +1,4 @@
-package controller;
+package br.uem.penaltis.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,24 +6,24 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.uem.penaltis.model.Batedor;
+import br.uem.penaltis.model.Goleiro;
+import br.uem.penaltis.model.Jogador;
+import br.uem.penaltis.model.Observer;
+import br.uem.penaltis.model.Parametros;
+import br.uem.penaltis.model.Ponto;
+import br.uem.penaltis.model.Time;
+import br.uem.penaltis.model.Util;
+import br.uem.penaltis.view.PartidaView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Batedor;
-import model.Goleiro;
-import model.Jogador;
-import model.Observer;
-import model.Parametros;
-import model.Ponto;
-import model.Time;
-import model.Util;
-import view.PartidaView;
 
 public class PartidaController{
 	
-	private final int TIME_JOGADOR = 0;
-	private final int TIME_MAQUINA = 1;
+	public static final int TIME_JOGADOR = 0;
+	public static final int TIME_MAQUINA = 1;
 	private final int NUMERO_COBRANCAS = 5;
 	private ArrayList<Observer> torcedores = new ArrayList<Observer>();
 	private boolean jogadorChutando;
@@ -91,15 +91,16 @@ public class PartidaController{
 		AdicionaTorcedoresAoObserver( this.timesDaPartida[TIME_JOGADOR].getTorcida() );
 		AdicionaTorcedoresAoObserver( this.timesDaPartida[TIME_MAQUINA].getTorcida() );
 		
-		System.out.println( this.timesDaPartida[TIME_JOGADOR].getNome() + " contra " +
-							this.timesDaPartida[TIME_MAQUINA].getNome() );
 		Parametros.setInicioAltomatico(true);
 		decideInicio();
 		iniciaPartidaView();
 		
-//		for( Observer o : this.torcedores ){
-//			o.update();
-//		}
+	}
+	
+	private void atualizaTorcedores(){
+		for( Observer o : this.torcedores ){
+			o.update();
+		}
 	}
 	
 	private void iniciaPartidaView() {
@@ -135,22 +136,28 @@ public class PartidaController{
 	public void chuteJogador( int ponto, int indexJogador ){
 		Batedor jogador;
 		if (this.isJogadorChutando() ){
-			jogador = ( Batedor )this.timesDaPartida[TIME_JOGADOR].getJogadores().get(indexJogador);
+			jogador = ( Batedor )this.timesDaPartida[TIME_JOGADOR]
+									 .getJogadores()
+									 .get(indexJogador);
 		}else{
-			jogador = ( Batedor )this.timesDaPartida[TIME_MAQUINA].getJogadores().get(indexJogador);
+			jogador = ( Batedor )this.timesDaPartida[TIME_MAQUINA]
+								     .getJogadores()
+								     .get(indexJogador);
 		}
 		Time timeAdversario = retornaTimeAdversario(jogador.getTime());
-		Ponto chuteJogador  = Ponto.values()[ponto];
-		Ponto defesaGoleiro = Ponto.values()[Util.random(5)];
+		int defesaGoleiro = Util.random(5);
 		pressaoTorcida(jogador, timeAdversario);
-		if (isGol( chuteJogador,
-				  defesaGoleiro,
-				  Ponto.errar(),
-				  Ponto.errar(),
+		if (isGol(jogador.direcionar(ponto),
+				  timeAdversario.getGoleiro().direcionar(defesaGoleiro),
+				  jogador.chutar(),
+				  timeAdversario.getGoleiro().defender(),
 				  jogador.getPerfil().getQualidade(), 
-				  timeAdversario.getGoleiro().getPerfil().getQualidade() ) ){
+				  timeAdversario.getGoleiro()
+				  				.getPerfil()
+				  				.getQualidade() ) ){
 			
 			jogador.getTime().marcaGol();
+			atualizaTorcedores();
 		}else{
 			jogador.getTime().marcaErro();
 		}
@@ -224,7 +231,7 @@ public class PartidaController{
 		return this.timesDaPartida[TIME_JOGADOR];
 	}
 
-	public boolean ifFimJogo() {
+	public boolean isFimJogo() {
 		if ( isJogadorIniciouCobrancas() ^ !isJogadorChutando()){
 			int diffGols = Math.abs( this.timesDaPartida[TIME_JOGADOR].getGols() -
 									 this.timesDaPartida[TIME_MAQUINA].getGols() );
