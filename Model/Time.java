@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Time {
 	
-//	private final int TAMANHO_TIME = 11;
-//	private final int TAMANHO_EQUIPE = 6;
-	
 	private String nome;
 	private List<Jogador> jogadores = new ArrayList<>();
-	private List<Jogador> batedores = new ArrayList<>();
-	private Jogador goleiro;
+	private List<Batedor> batedores = new ArrayList<>();
+	private Goleiro goleiro;
 	private Torcida torcida;
 	private int gols;
+	private int erros;
 	
 	public Time(String nome, List<Jogador> jogadores){
 		this.torcida = new Torcida();
 		this.nome = nome;
 		this.jogadores = jogadores;
+		this.goleiro = (Goleiro) jogadores.get(0);
+		adicionaTimeAosJogadores();
 	}
 	
 	public List<Jogador> getJogadores() {
@@ -53,12 +53,31 @@ public class Time {
 		return this.gols;
 	}
 
-	public Jogador getGoleiro() {
-		return goleiro;
+	public Goleiro getGoleiro() {
+		return this.goleiro;
 	}
 
-	public void setGoleiro(Jogador goleiro) {
+	public void setGoleiro(Goleiro goleiro) {
 		this.goleiro = goleiro;
 	}
 
+	public void marcaErro() {
+		this.erros++;
+		
+	}
+	public int getErros(){
+		return this.erros;
+	}
+
+	public void adicionaTimeAosJogadores(){
+		for( Jogador j : this.jogadores){
+			j.setTime(this);
+		}
+		this.goleiro.setTime(this);
+	}
+	
+	public int getCobrancas(){
+		return this.gols + this.erros;
+		
+	}
 }
