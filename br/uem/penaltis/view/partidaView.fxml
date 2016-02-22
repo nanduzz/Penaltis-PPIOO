@@ -6,35 +6,43 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="318.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox layoutX="38.0" layoutY="43.0">
+      <VBox layoutX="38.0" layoutY="17.0" spacing="10.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="30.0">
          <children>
-            <ListView fx:id="lvTime1" layoutX="38.0" layoutY="43.0" prefHeight="200.0" prefWidth="136.0" />
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <HBox layoutX="41.0" layoutY="17.0" spacing="108.0">
                <children>
-                  <ImageView fx:id="ivJogo" fitHeight="200.0" fitWidth="250.0" mouseTransparent="true" pickOnBounds="true">
-                     <image>
-                        <Image url="@resources/gol.jpg" />
-                     </image>
-                  </ImageView>
-                  <VBox opacity="0.74" spacing="90.0">
-                     <children>
-                        <HBox fx:id="hBoxCima" spacing="45.0">
-                           <VBox.margin>
-                              <Insets top="40.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <HBox fx:id="hBoxBaixo" spacing="45.0" />
-                     </children>
-                  </VBox>
+                  <Label fx:id="lbTime1" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="17.0" prefHeight="17.0" prefWidth="136.0" text="Time 1" />
+                  <Label fx:id="lbPlacar" layoutX="282.0" layoutY="17.0" text="Placar" />
+                  <Label fx:id="lbTime2" alignment="CENTER" contentDisplay="CENTER" layoutX="423.0" layoutY="17.0" prefHeight="17.0" prefWidth="136.0" text="Time 2" />
                </children>
-            </StackPane>
-            <ListView fx:id="lvTime2" layoutX="427.0" layoutY="43.0" prefHeight="200.0" prefWidth="136.0" />
+            </HBox>
+            <HBox layoutX="38.0" layoutY="43.0">
+               <children>
+                  <ListView fx:id="lvTime1" layoutX="38.0" layoutY="43.0" prefHeight="200.0" prefWidth="136.0" />
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="ivJogo" fitHeight="200.0" fitWidth="250.0" mouseTransparent="true" pickOnBounds="true">
+                           <image>
+                              <Image url="@resources/gol.jpg" />
+                           </image>
+                        </ImageView>
+                        <VBox opacity="0.74" spacing="90.0">
+                           <children>
+                              <HBox fx:id="hBoxCima" spacing="45.0">
+                                 <VBox.margin>
+                                    <Insets top="40.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="hBoxBaixo" spacing="45.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+                  <ListView fx:id="lvTime2" layoutX="427.0" layoutY="43.0" prefHeight="200.0" prefWidth="136.0" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <Label fx:id="lbTime1" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="17.0" prefHeight="17.0" prefWidth="136.0" text="Time 1" />
-      <Label fx:id="lbTime2" alignment="CENTER" contentDisplay="CENTER" layoutX="423.0" layoutY="17.0" prefHeight="17.0" prefWidth="136.0" text="Time 2" />
-      <Label fx:id="lbPlacar" layoutX="282.0" layoutY="17.0" text="Placar" />
+      </VBox>
    </children>
-</Pane>
+</AnchorPane>
